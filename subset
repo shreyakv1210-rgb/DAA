@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class Subset {
+    static int c = 0; 
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*** SUBSET SUM PROBLEM ***");
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+
+        int[] w = new int[n];
+        int[] x = new int[n];
+        int sum = 0;
+
+        System.out.println("Enter elements in increasing order:");
+        for (int i = 0; i < n; i++) {
+            w[i] = sc.nextInt();
+            sum += w[i];
+        }
+
+        System.out.print("Enter target sum d: ");
+        int d = sc.nextInt();
+        System.out.println("SUM = " + sum);
+
+       
+        if (sum < d || w[0] > d) {
+            System.out.println("Subset not possible");
+        } else {
+            finalSubset(0, 0, sum, x, w, d);
+            if (c == 0) System.out.println("No subset found");
+        }
+
+        sc.close(); 
+    }
+
+    static void finalSubset(int cs, int k, int r, int[] x, int[] w, int d) {
+        x[k] = 1;
+        if (cs + w[k] == d) {
+            c++;
+            System.out.print("\nSolution " + c + " = { ");
+            for (int i = 0; i <= k; i++) if (x[i] == 1) System.out.print(w[i] + " ");
+            System.out.print("}");
+        } else if (k + 1 < w.length && cs + w[k] + w[k+1] <= d) {
+            finalSubset(cs + w[k], k + 1, r - w[k], x, w, d);
+        }
+
+        x[k] = 0;
+        if (k + 1 < w.length && cs + r - w[k] >= d && cs + w[k+1] <= d) {
+            finalSubset(cs, k + 1, r - w[k], x, w, d);
+        }
+    }
+}
+
