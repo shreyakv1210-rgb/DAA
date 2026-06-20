@@ -1,0 +1,46 @@
+package dynamic;
+import java.util.Scanner;
+
+public class DKnapsack {
+    int n, c;
+    int[] p, w;
+    int[][] v;
+
+    void compute() {
+        v = new int[n + 1][c + 1];
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= c; j++) {
+                if (j < w[i]) v[i][j] = v[i - 1][j];
+                else v[i][j] = Math.max(v[i - 1][j], p[i] + v[i - 1][j - w[i]]);
+            }
+        }
+        System.out.println("Optimal Solution: " + v[n][c]);
+        System.out.print("Objects picked: ");
+        int cap = c, items = n;
+        while (items > 0) {
+            if (v[items][cap] != v[items - 1][cap]) {
+                System.out.print(items + " ");
+                cap -= w[items];
+            }
+            items--;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        DKnapsack dk = new DKnapsack();
+        System.out.print("Enter number of objects: ");
+        dk.n = sc.nextInt();
+        dk.p = new int[dk.n + 1];
+        dk.w = new int[dk.n + 1];
+        System.out.print("Enter capacity of knapsack: ");
+        dk.c = sc.nextInt();
+        System.out.println("Enter profits:");
+        for (int i = 1; i <= dk.n; i++) dk.p[i] = sc.nextInt();
+        System.out.println("Enter weights:");
+        for (int i = 1; i <= dk.n; i++) dk.w[i] = sc.nextInt();
+        dk.compute();
+        sc.close();
+    }
+}
