@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class MergeSort {
+    public static void merge(int[] a, int low, int mid, int high) {
+        int[] c = new int[high + 1];
+        int i = low, j = mid + 1, k = low;
+
+        while (i <= mid && j <= high) {
+            if (a[i] < a[j]) c[k++] = a[i++];
+            else c[k++] = a[j++];
+        }
+        while (i <= mid) c[k++] = a[i++];
+        while (j <= high) c[k++] = a[j++];
+        for (int m = low; m <= high; m++) a[m] = c[m];
+    }
+
+    public static void mergesort(int[] a, int low, int high) {
+        if (low < high) {
+            int mid = (low + high) / 2;
+            mergesort(a, low, mid);
+            mergesort(a, mid + 1, high);
+            merge(a, low, mid, high);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] array = new int[n];
+        for (int i = 0; i < n; i++) array[i] = sc.nextInt();
+
+        long startTime = System.nanoTime();
+        mergesort(array, 0, n - 1);
+        long endTime = System.nanoTime();
+
+        for (int i : array) System.out.print(i + " ");
+        System.out.println("\nTime taken: " + (endTime - startTime) + " nanoseconds");
+
+        sc.close();
+    }
+}
