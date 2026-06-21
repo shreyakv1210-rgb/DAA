@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+class GKnapsack {
+    void compute() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of items: ");
+        int n = sc.nextInt();
+        double[] profit = new double[n];
+        double[] weight = new double[n];
+
+        System.out.println("Enter profits:");
+        for (int i = 0; i < n; i++) {
+            profit[i] = sc.nextDouble();
+        }
+
+        System.out.println("Enter weights:");
+        for (int i = 0; i < n; i++) {
+            weight[i] = sc.nextDouble();
+        }
+
+        System.out.print("Enter knapsack capacity: ");
+        double capacity = sc.nextDouble();
+        double maxProfit = 0;
+        System.out.print("Objects picked into the knapsack are: ");
+
+        for (int i = 0; i < n; i++) {
+            if (weight[i] <= capacity) {
+                maxProfit += profit[i];
+                capacity -= weight[i];
+                System.out.print((i + 1) + " ");
+            } else {
+                maxProfit += (profit[i] / weight[i]) * capacity;
+                System.out.print((i + 1) + "(fraction) ");
+                break;
+            }
+        }
+
+        System.out.println();
+        System.out.println("Maximum Profit = " + maxProfit);
+        sc.close();
+    }
+
+    public static void main(String[] args) {
+        GKnapsack obj = new GKnapsack();
+        obj.compute();
+    }
+}
