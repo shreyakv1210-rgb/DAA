@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class LinearSearch {
+    public static int sequentialSearch(int[] A, int n, int k) {
+        for (int i = 0; i < n; i++) {
+            if (A[i] == k) return i;
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+        int[] array = new int[n];
+
+        System.out.println("Enter " + n + " elements:");
+        for (int i = 0; i < n; i++) {
+            array[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter the key element to search: ");
+        int key = sc.nextInt();
+
+        long startTime = System.nanoTime();
+        int result = sequentialSearch(array, n, key);
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+
+        if (result != -1) {
+            System.out.println("Element found at index: " + result);
+        } else {
+            System.out.println("Element not found.");
+        }
+
+        System.out.println("Time taken for search: " + duration + " nanoseconds");
+
+        sc.close();
+    }
+}
