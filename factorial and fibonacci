@@ -1,0 +1,31 @@
+import java.util.Scanner;
+public class FactorialExample {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int num = sc.nextInt();
+        int factorial = 1;
+        for (int i = 1; i <= num; i++) {
+            factorial = factorial * i;
+        }
+        System.out.println("Factorial of " + num + " is: " + factorial);
+    }
+}
+
+
+import java.util.Scanner;
+public class FibonacciExample {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of terms: ");
+        int n = sc.nextInt();
+        int first = 0, second = 1;
+        System.out.println("Fibonacci Series:");
+        for (int i = 1; i <= n; i++) {
+            System.out.print(first + " ");
+            int next = first + second;
+            first = second;
+            second = next;
+        }
+    }
+}
