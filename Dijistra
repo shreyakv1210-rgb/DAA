@@ -1,0 +1,53 @@
+import java.util.Scanner;
+
+public class Dijkstra {
+    int[] distance = new int[50];
+    int[][] cost = new int[50][50];
+
+    void calc(int n, int s) {
+        int[] flag = new int[n + 1];
+        int minpos = 1, minimum, c = 2;
+
+        for (int i = 1; i <= n; i++) distance[i] = cost[s][i];
+        flag[s] = 1;
+
+        while (c++ <= n) {
+            minimum = 999;
+            for (int k = 1; k <= n; k++) {
+                if (flag[k] != 1 && distance[k] < minimum) {
+                    minimum = distance[k];
+                    minpos = k;
+                }
+            }
+            flag[minpos] = 1;
+            for (int k = 1; k <= n; k++) {
+                if (flag[k] != 1 && distance[minpos] + cost[minpos][k] < distance[k]) {
+                    distance[k] = distance[minpos] + cost[minpos][k];
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        Dijkstra d = new Dijkstra();
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                d.cost[i][j] = sc.nextInt();
+                if (d.cost[i][j] == 0) d.cost[i][j] = 999;
+            }
+        }
+
+        int source = sc.nextInt();
+        d.calc(n, source);
+
+        for (int i = 1; i <= n; i++) {
+            if (i != source) {
+                System.out.println("Source: " + source + " destination: " + i + " Mincost: " + d.distance[i]);
+            }
+        }
+        sc.close();
+    }
+}
